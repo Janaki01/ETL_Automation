@@ -1,7 +1,11 @@
 provider "aws" {
   region = var.region
 }
- 
+data "archive_file" "etl_lambda_zip" {
+  type = "zip"
+  source_dir = "${path.module}/../../lambda"
+  output_path = "${path.module}/etl_lambda.zip"
+}
 # -------------------------------
 # Security Group for RDS + Lambda
 # -------------------------------
@@ -113,8 +117,3 @@ resource "aws_iam_role_policy" "lambda_s3_policy" {
   })
 }
 
-data "archive_file" "etl_lambda_zip" {
-  type = "zip"
-  source_dir = "${path.module}/../../lambda"
-  output_path = "${path.module}/etl_lambda.zip"
-}
