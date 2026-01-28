@@ -77,8 +77,8 @@ resource "aws_lambda_function" "etl_lambda" {
   runtime       = "python3.10"
   # filename      = "${path.module}/etl_lambda.zip"
   # source_code_hash = filebase64sha256("${path.module}/etl_lambda.zip")
-  filename = data.archive.file.etl_lambda.zip.output_path
-  source_code_hash = data.archive.file.etl_lambda.zip.output_base64sha256
+  filename = data.archive.file.etl_lambda_zip.output_path
+  source_code_hash = data.archive.file.etl_lambda_zip.output_base64sha256
   timeout = 300
   memory_size = 512
  
@@ -113,7 +113,7 @@ resource "aws_iam_role_policy" "lambda_s3_policy" {
   })
 }
 
-data "archive_file" "etl_lambda.zip" {
+data "archive_file" "etl_lambda_zip" {
   type = "zip"
   source_dir = "${path.module}/../../lambda"
   output_path = "${path.module}/etl_lambda.zip"
